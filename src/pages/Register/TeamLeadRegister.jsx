@@ -41,35 +41,25 @@ const TeamLeadRegister = () => {
                     skills,
                 }
             );
-
-            if (response.status !== 200) {
-                if (
-                    response.data.name &&
-                    response.data.name[0] ===
-                        "A user with that username already exists."
-                ) {
-                    setErrorMessage(
-                        "A user with that username already exists."
-                    );
-                } else if (response.data.message) {
-                    throw new Error(response.data.message);
-                } else {
-                    throw new Error("Registration failed");
-                }
-            } else {
-                Swal.fire({
-                    icon: "success",
-                    title: "Registration Successful",
-                    text: "You have successfully registered.",
-                }).then(() => {
-                    navigate("/");
-                });
-            }
+    
+            Swal.fire({
+                icon: "success",
+                title: "Registration Successful",
+                text: "You have successfully registered.",
+            }).then(() => {
+                navigate("/");
+            });
+    
         } catch (error) {
             console.error("Registration error:", error);
-            setErrorMessage(
-                error.response.data.username[0] || "Registration failed"
-            );
+    
+            if (error.response?.data?.username) {
+                setErrorMessage(error.response.data.username[0]);
+            } else if (error.response?.data?.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage("Registration failed");
+            }
         }
     };
 

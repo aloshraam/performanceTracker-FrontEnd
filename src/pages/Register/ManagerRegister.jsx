@@ -41,36 +41,21 @@ const ManagerRegister = () => {
                     skills,
                 }
             );
-            console.log("{ result: response.response }");
-
-            if (response.status !== 200) {
-                if (
-                    response.data.username &&
-                    response.data.username[0] ===
-                        "A user with that username already exists."
-                ) {
-                    setErrorMessage(
-                        "A user with that username already exists."
-                    );
-                } else if (response.data.message) {
-                    throw new Error(response.data.message);
-                } else {
-                    throw new Error("Registration failed");
-                }
-            } else {
-                Swal.fire({
-                    icon: "success",
-                    title: "Registration Successful",
-                    text: "You have successfully registered.",
-                }).then(() => {
-                    navigate("/");
-                });
-            }
+            console.log("response:", response);
+    
+            Swal.fire({
+                icon: "success",
+                title: "Registration Successful",
+                text: "You have successfully registered.",
+            }).then(() => {
+                navigate("/");
+            });
         } catch (error) {
-            console.log({ error });
             console.error("Registration error:", error);
             setErrorMessage(
-                error.response.data.username[0] || "Registration failed"
+                error?.response?.data?.username?.[0] ||
+                error?.response?.data?.message ||
+                "Registration failed"
             );
         }
     };

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { toast } from "react-toastify";
+import ViewEmployees from "./ViewEmployees";
 
 function TeamCreation() {
   const [name, setName] = useState("");
@@ -63,8 +64,8 @@ function TeamCreation() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex justify-center items-center bg-gray-100 d-flex flex-col">
+      <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg ">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
           Create a Team
         </h2>
@@ -108,6 +109,9 @@ function TeamCreation() {
             </button>
           </div>
         </form>
+      </div>
+      <div>
+      <ViewEmployees/>
       </div>
     </div>
   );

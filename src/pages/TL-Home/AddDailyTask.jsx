@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import ViewEmployees from "./ViewEmployees";
 
 function AddDailyTask() {
   const [Dailytask, setDailyTask] = useState({
@@ -102,6 +103,7 @@ function AddDailyTask() {
           </form>
           {errorMessages && <div className="text-red-500 mt-4"></div>}
         </div>
+        <ViewEmployees/>
       </div>
     </>
   );

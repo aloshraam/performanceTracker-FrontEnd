@@ -36,7 +36,7 @@ const AttendanceTableAdmin = () => {
         const selectedDate = dates[page - 1];
         setFilteredData(attendanceDetails.filter(item => item.date === selectedDate));
     };
-
+    console.log(filteredData);
     const columns = [
         {
             title: 'User',
@@ -63,7 +63,7 @@ const AttendanceTableAdmin = () => {
 
     return (
         <Card style={{ padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-            <Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>Attendance Records</Title>
+            <Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>Attendance Records </Title>
             <Table 
                 columns={columns} 
                 dataSource={filteredData} 
