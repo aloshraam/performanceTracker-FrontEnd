@@ -30,6 +30,10 @@ const AdminLogin = () => {
       localStorage.setItem("adminToken", response.data.token);
 
       if (response.status === 200) {
+        if(response.data.user_type !== 'admin'){
+          alert("unauthorized user!!!")
+          return
+        }
         Swal.fire({
           icon: "success",
           title: "Login Successful",

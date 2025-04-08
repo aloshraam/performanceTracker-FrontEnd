@@ -21,7 +21,7 @@ const TraineeRegister = () => {
         setErrorMessage("");
     
         try {
-            const token = localStorage.getItem("HRtoken"); // Get token from storage
+            const token = localStorage.getItem("TlToken"); // Get token from storage
             const response = await axios.post(
                 "http://127.0.0.1:8000/empapi/register/",
                 {
@@ -48,7 +48,7 @@ const TraineeRegister = () => {
                     title: "Registration Successful",
                     text: "You have successfully registered.",
                 }).then(() => {
-                    navigate("/manager");
+                    navigate("/team-lead");
                 });
             } else {
                 setErrorMessage("Registration failed");

@@ -1,22 +1,65 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
 import Navbar from "../../components/Header/Navbar";
-import './Login.css'
+import { toast } from "react-toastify";
+import './Login.css';
 
 const Login = () => {
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleButtonClick = (role) => {
-    setSelectedRole(role);
-    if (role === "admin") {
-      navigate("/admin/login");
-    } else if (role === "manager") {
-      navigate("/manager/login");
-    } else if (role === "team-lead") {
-      navigate("/team-lead/login");
-    } else if (role === "trainee") {
-      navigate("/trainee/login");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/adminapi/token/",
+        { username, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      localStorage.setItem("TlToken", response.data.token);
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have successfully logged in.",
+        }).then(() => {
+          if (response.data.user_type === "admin") {
+            localStorage.setItem("adminToken", response.data.token);
+            navigate("/admin");
+          } else if (response.data.user_type === "hr") {
+            localStorage.setItem("HRtoken", response.data.token);
+            navigate("/manager");
+          } else if (response.data.user_type === "teamlead") {
+            localStorage.setItem("TlToken", response.data.token);
+            navigate("/team-lead");
+          } else if (response.data.user_type === "employee") {
+            localStorage.setItem("Emp-token", response.data.token);
+            localStorage.setItem("userID", JSON.stringify(response.data.id));
+            navigate("/trainee");
+          }
+
+          localStorage.setItem("userData", JSON.stringify(response.data));
+        });
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      if (error.response) {
+        const { data } = error.response;
+        if (data?.non_field_errors?.length > 0) {
+          toast.warning(data.non_field_errors[0]);
+        } else {
+          toast.warning("Invalid username or password. Please try again.");
+        }
+      } else if (error.request) {
+        alert("No response received from the server. Please try again later.");
+      } else {
+        alert("An error occurred while logging in. Please try again later.");
+      }
     }
   };
 
@@ -24,69 +67,73 @@ const Login = () => {
     <>
       <Navbar />
       <div
-        className="relative img"
+        className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
         style={{
           backgroundImage: "url('https://wallpapercave.com/wp/wp5569141.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
         }}
       >
-         <div className="absolute bg-black opacity-50"></div> 
-        <div className="flex items-center justify-between min-h-screen bg-opacity-100 p-20">
-        <div className="flex items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-6xl text-white font-bold mb-6 text-center fade-in">
-                welcome! to <br />Talent Trove
-              </h1>
-            </div>
+        <div className="absolute inset-0 bg-black opacity-60"></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center w-full max-w-6xl p-6">
+          <div className="text-center text-white md:w-1/2 mb-10 md:mb-0 md:pr-10">
+            <h1 className="text-5xl font-bold mb-4 animate-fade-in">Welcome</h1>
+            <p className="text-lg">Please sign in to continue</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-14 fade-in">
-            <h1 className="text-3xl font-bold mb-6 text-center">Select a Role</h1>
-
-            <div className="space-y-4">
-              <button
-                onClick={() => handleButtonClick("admin")}
-                className="w-full p-4 rounded-md font-semibold text-dark hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border border-gray-300 hover:border-2 hover:border-gray-700"
-              >
-                Admin
-              </button>
-
-              <button
-                onClick={() => handleButtonClick("manager")}
-                className={`w-full p-4 rounded-md font-semibold text-dark hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border border-gray-300 hover:border-gray-500 ${
-                  selectedRole === "manager" && "border-2 border-gray-700" // Selected state outline
-                }`}
-              >
-                Manager
-              </button>
-
-              <button
-                onClick={() => handleButtonClick("team-lead")}
-                className={`w-full p-4 rounded-md font-semibold text-dark hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border border-gray-300 hover:border-gray-500 ${
-                  selectedRole === "team-lead" && "border-2 border-gray-700" // Selected state outline
-                }`}
-              >
-                Team Lead
-              </button>
-
-              <button
-                onClick={() => handleButtonClick("trainee")}
-                className={`w-full p-4 rounded-md font-semibold text-dark hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 border border-gray-300 hover:border-gray-500 ${
-                  selectedRole === "trainee" && "border-2 border-gray-700" // Selected state outline
-                }`}
-              >
-                Trainee
-              </button>
-            </div>
-
-            {selectedRole && (
-              <div className="mt-6">
-                <p className="text-lg font-semibold text-center">
-                  You selected: {selectedRole}
-                </p>
+          <div className="bg-white rounded-2xl shadow-xl p-10 md:w-1/2 w-full animate-fade-in">
+            <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-6">
+              Sign in to your account
+            </h2>
+            <form onSubmit={handleLogin} className="space-y-5">
+              <div>
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUserName(e.target.value)}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
               </div>
-            )}
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium shadow-md transition"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-gray-600">
+              Not a member?{" "}
+              <Link
+                to={'/register'}
+                className="text-indigo-600 font-semibold hover:underline"
+              >
+                Register
+              </Link>
+            </p>
           </div>
         </div>
       </div>

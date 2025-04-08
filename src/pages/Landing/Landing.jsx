@@ -32,8 +32,8 @@ const Landing = () => {
         >
           <span className="icon-sm"></span>
         </button>
-        <a className="navbar-brand" href="#">
-          Talent Trove
+        <a className="navbar-brand ps-24" href="#">
+        Employee Performance Evaluation
         </a>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav ml-auto">
@@ -79,7 +79,7 @@ const Landing = () => {
             <div className="col-md-6 col-sm-12 text-white wow fadeIn">
               <h2 className="pt-4">
                 Optimize Your Team's Performance with{" "}
-                <b className="text-primary-light">Talent Trove</b>
+                <b className="text-primary-light">Employee Performance Evaluation</b>
               </h2>
               <p className="mt-5 fs-5">
                 In today's fast-paced technology landscape, managing IT
@@ -88,12 +88,12 @@ const Landing = () => {
                 actionable insights to boost productivity and job satisfaction.
               </p>
               <p className="mt-5">
-                <a
+                {/* <a
                   href="#features"
                   className="btn btn-primary mr-2 mb-2 page-scroll"
                 >
                   Learn More
-                </a>
+                </a> */}
                 <Link to={"/login"} className="btn btn-white mb-2 page-scroll">
                   Login
                 </Link>
@@ -104,7 +104,7 @@ const Landing = () => {
       </section>
 
       {/* About Us Section */}
-      <section
+      {/* <section
         className="bg-white"
         id="about"
         style={{ position: "relative", overflow: "hidden" }}
@@ -140,78 +140,11 @@ const Landing = () => {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <Lottie animationData={background} loop={true} /> */}
 
-      {/* Features Section */}
-      <section className="cta bg-primary text-white text-center" id="features">
-        <div className="container">
-          <div className="row mb-3">
-            <div className="col-md-6 col-sm-8 mx-auto text-center wow fadeIn">
-              <h2 className="text-primary">Key Features</h2>
-              <p className="lead mt-4">
-                Talent Trove offers a range of features to help you monitor and
-                manage performance effectively.
-              </p>
-            </div>
-          </div>
-          <div className="row mt-5 text-center">
-            {/* Features List */}
-            {[
-              {
-                icon: <AiOutlineMobile className="w-8 h-8" />,
-                title: "Performance Prediction",
-                text: "Predict performance levels based on various indicators to proactively manage stress and productivity.",
-              },
-              {
-                icon: <AiOutlineWifi className="w-8 h-8" />,
-                title: "Real-time Monitoring",
-                text: "Monitor work-related factors such as project charts, hours worked, and meetings attended in real-time.",
-              },
-              {
-                icon: <AiOutlineSetting className="w-8 h-8" />,
-                title: "Advanced Analytics",
-                text: "Leverage machine learning to gain actionable insights and optimize team performance.",
-              },
-              {
-                icon: <AiOutlineCloudUpload className="w-8 h-8" />,
-                title: "Comprehensive Data Integration",
-                text: "Integrate various data sources for a holistic view of performance and stress factors.",
-              },
-              {
-                icon: <AiOutlineLock className="w-8 h-8" />,
-                title: "Secure and Confidential",
-                text: "Ensure that all performance data is securely stored and handled with utmost confidentiality.",
-              },
-              {
-                icon: <AiOutlineBgColors className="w-8 h-8" />,
-                title: "Customizable Dashboards",
-                text: "Create customizable dashboards to view and analyze performance metrics tailored to your needs.",
-              },
-            ].map((feature, index) => (
-              <div className="col-md-4 wow fadeIn" key={index}>
-                <div className="card">
-                  <Lottie
-                    animationData={background}
-                    loop={true}
-                    style={{
-                      position: "absolute",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  />
-                  <div className="card-body">
-                    <div className="icon-box">{feature.icon}</div>
-                    <h6>{feature.title}</h6>
-                    <p>{feature.text}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Testimonials Section */}
       <section

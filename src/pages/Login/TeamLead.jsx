@@ -28,6 +28,10 @@ const TeamLeadLogin = () => {
 
       localStorage.setItem("TlToken", response.data.token);
       if (response.status === 200) {
+        if(response.data.user_type !== 'teamlead'){
+          alert("unauthorized user!!!")
+          return
+        }
         Swal.fire({
           icon: "success",
           title: "Login Successful",

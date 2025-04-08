@@ -71,7 +71,7 @@ const TeamLeadRegister = () => {
 
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="min-h-screen flex justify-center items-center bg-gray-100">
                 <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
                     <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">

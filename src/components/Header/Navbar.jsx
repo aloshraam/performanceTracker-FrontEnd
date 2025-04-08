@@ -13,7 +13,7 @@ const Navbar = ({ role }) => {
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
-            Talent Trove
+          Employee Performance Evaluation
           </span>
         </a>
         {/* <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

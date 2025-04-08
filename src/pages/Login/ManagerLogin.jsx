@@ -31,6 +31,10 @@ const ManagerLogin = () => {
       console.log(response.data.token);
 
       if (response.status === 200) {
+        if(response.data.user_type !== 'hr'){
+          alert("unauthorized user!!!")
+          return
+        }
         Swal.fire({
           icon: "success",
           title: "Login Successful",

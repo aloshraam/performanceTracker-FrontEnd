@@ -56,6 +56,7 @@ import ProjectList from "./pages/Admin/ProjectList";
 import ViewTeaminDetail from "./pages/TL-Home/TeamLeadEmplDetail";
 import EmployeePerfomance from "./pages/Emp-Home/EmployeePerfomance";
 import AttendanceTableAdmin from "./pages/Admin/AttendanceTableAdmin";
+import MainRegister from "./pages/Register/MainRegister";
 
 
 const App = () => {
@@ -226,6 +227,9 @@ const App = () => {
               element={<ProjectOfTeams />}
             />
           </Route>
+
+          {/* router for the new combined register of manager and the teamlead */}
+          <Route path="/register" element={<MainRegister />}></Route>
         </Routes>
       </BrowserRouter>
       <ToastContainer
