@@ -5,9 +5,7 @@ import { toast } from "react-toastify";
 
 const ProjectOfTeams = () => {
   const [teamProjects, setTeamProjects] = useState([]);
-  const [formData, setFormData] = useState({ id: "" });
   const token = localStorage.getItem("Emp-token");
-  console.log({ teamProjects });
 
   useEffect(() => {
     const fetchTeamProjects = async () => {
@@ -27,20 +25,15 @@ const ProjectOfTeams = () => {
     };
 
     fetchTeamProjects();
-  }, []);
+  }, [token]);
 
-  const handleCreateButtonClick = (detailId) => {
-    console.log("Detail ID:", detailId);
-    setFormData({ id: detailId });
-    console.log("FormData:", formData);
-    handleCreate();
-  };
-
-  const handleCreate = async () => {
+  const handleCreate = async (detailId) => {
     try {
+      console.log("Creating task chart for detail ID:", detailId);
+
       const response = await axios.post(
-        `http://127.0.0.1:8000/empapi/projectdetail/${formData.id}/taskchart_add/`,
-        formData,
+        `http://127.0.0.1:8000/empapi/projectdetail/${detailId}/taskchart_add/`,
+        { id: detailId },
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -50,7 +43,7 @@ const ProjectOfTeams = () => {
       alert("Task Chart Created");
       console.log("API Response:", response.data);
     } catch (error) {
-      toast.warning("Task chart already created.");
+      toast.warning("Task chart already created or you don't have access.");
       console.error("Error creating project task:", error);
     }
   };
@@ -89,6 +82,7 @@ const ProjectOfTeams = () => {
                     <span className="font-semibold">Team Name:</span>{" "}
                     {project.team}
                   </Typography>
+
                   {project.project_details.length === 0 ? (
                     ""
                   ) : (
@@ -120,7 +114,7 @@ const ProjectOfTeams = () => {
                             {detail.status}
                           </Typography>
                           <button
-                            onClick={() => handleCreateButtonClick(detail.id)}
+                            onClick={() => handleCreate(detail.id)}
                             className="w-40 h-12 mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                           >
                             Create Chart

@@ -63,7 +63,7 @@ export const approveTraineeAPI = async (id, token) => {
 export const assignProject = async (id, token) => {
   return await commonAPI(
     "POST",
-    `${base_URL}/teamleadapi/projects/${id}/project_assign/ `,
+    `${base_URL}/teamleadapi/projects/${id}/project_assign/`,
     "",
     {
       Authorization: "Token " + token,
@@ -203,6 +203,19 @@ export const attendanceAdminAPI = async (token) => {
     "GET",
     `${base_URL}/adminapi/attendance/`,
     "",
+    {
+      Authorization: "Token " + token,
+    }
+  );
+};
+
+// performace added by the teamlead for employee (marks)
+export const markPerformanceAPI = async ( body, token) => {
+  console.log({ body });
+  return await commonAPI(
+    "POST",
+    `${base_URL}/teamleadapi/performance_assign/`,
+    body,
     {
       Authorization: "Token " + token,
     }

@@ -36,6 +36,7 @@ const ViewTeam = () => {
           title: "Approved",
         });
         fetchTeamDetails();
+        alert("Team created successfully!!!")
       } else {
         Swal.fire({
           icon: "error",
