@@ -47,6 +47,7 @@ const TeamLeadRegister = () => {
                 title: "Registration Successful",
                 text: "You have successfully registered.",
             }).then(() => {
+                console.log(response.data);
                 navigate("/");
             });
     

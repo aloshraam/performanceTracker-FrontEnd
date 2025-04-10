@@ -26,9 +26,9 @@ function TeamCreation() {
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         const { id: teamId, teamlead: teamLeadId } = response.data;
-
+        
         const hrRequests = JSON.parse(localStorage.getItem("hrRequests")) || [];
         const newRequest = {
           teamId,
@@ -40,7 +40,7 @@ function TeamCreation() {
           "hrRequests",
           JSON.stringify([...hrRequests, newRequest])
         );
-
+        
         Swal.fire({
           icon: "success",
           title: "Creation Successful",
