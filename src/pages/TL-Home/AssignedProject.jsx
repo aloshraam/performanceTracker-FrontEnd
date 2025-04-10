@@ -23,6 +23,7 @@ const AssignedProject = () => {
           }
         );
         setAssignedProject(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Failed to fetch assigned project details:", error);
       }
@@ -90,34 +91,44 @@ const AssignedProject = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {assignedProject.map((assigned, index) => (
-                <tr key={index}>
-                  <td className="py-3 px-4 border whitespace-nowrap">{assigned.id}</td>
-                  <td className="py-3 px-4 border whitespace-nowrap">{assigned.project}</td>
-                  <td className="py-3 px-4 border whitespace-nowrap">{assigned.teamlead}</td>
-                  <td className="py-3 px-4 border whitespace-nowrap">{assigned.team}</td>
-                  <td className="py-3 px-4 border whitespace-nowrap">
-                    <Link to={`/assign-to-emp/${assigned.id}`}>
-                      <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Assign to Trainees
-                      </Button>
-                    </Link>
-                  </td>
-                  <td className="py-3 px-4 border whitespace-nowrap">
-                    {isCompleted(assigned.id) ? (
-                      <span className="text-green-600">Completed</span>
-                    ) : (
-                      <button
-                        onClick={() => handleCompleteButtonClick(assigned.id)}
-                        type="button"
-                        className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      >
-                        Complete
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {assignedProject.map((assigned, index) => {
+                const completed = isCompleted(assigned.id);
+                return (
+                  <tr key={index}>
+                    <td className="py-3 px-4 border whitespace-nowrap">{assigned.id}</td>
+                    <td className="py-3 px-4 border whitespace-nowrap">{assigned.project}</td>
+                    <td className="py-3 px-4 border whitespace-nowrap">{assigned.teamlead}</td>
+                    <td className="py-3 px-4 border whitespace-nowrap">{assigned.team}</td>
+                    <td className="py-3 px-4 border whitespace-nowrap">
+                      <Link to={`/assign-to-emp/${assigned.id}`}>
+                        <Button
+                          className={`font-bold py-2 px-4 rounded ${
+                            completed
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-blue-500 hover:bg-blue-700 text-white"
+                          }`}
+                          disabled={completed}
+                        >
+                          Assign to Trainees
+                        </Button>
+                      </Link>
+                    </td>
+                    <td className="py-3 px-4 border whitespace-nowrap">
+                      {completed ? (
+                        <span className="text-green-600 font-semibold">Completed</span>
+                      ) : (
+                        <button
+                          onClick={() => handleCompleteButtonClick(assigned.id)}
+                          type="button"
+                          className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                        >
+                          Complete
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
