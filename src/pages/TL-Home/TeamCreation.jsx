@@ -28,7 +28,7 @@ function TeamCreation() {
 
       if (response.status === 200 || response.status === 201) {
         const { id: teamId, teamlead: teamLeadId } = response.data;
-        
+
         const hrRequests = JSON.parse(localStorage.getItem("hrRequests")) || [];
         const newRequest = {
           teamId,
@@ -40,21 +40,39 @@ function TeamCreation() {
           "hrRequests",
           JSON.stringify([...hrRequests, newRequest])
         );
-        
+
         Swal.fire({
           icon: "success",
           title: "Creation Successful",
-          text: "You have successfully Created.",
+          text: "You have successfully created the team.",
         }).then(() => {
           navigate("/team-lead");
         });
-      } else {
-        toast.error(response?.response?.data?.error);
       }
     } catch (error) {
-      toast.error(error.response.data.error);
+      const backendError = error?.response?.data?.error;
 
-      console.error("Creation error:", error);
+      if (backendError === "This teamlead already has a team.") {
+        Swal.fire({
+          icon: "error",
+          title: "Team Already Exists",
+          text: "You already have a team. A team lead can only manage one team.",
+        });
+      } else if (backendError) {
+        Swal.fire({
+          icon: "error",
+          title: "Creation Failed",
+          text: backendError,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong. Please try again later.",
+        });
+      }
+
+      console.error("Team creation error:", error);
     }
   };
 
@@ -111,7 +129,7 @@ function TeamCreation() {
         </form>
       </div>
       <div>
-      <ViewEmployees/>
+        <ViewEmployees />
       </div>
     </div>
   );
