@@ -13,56 +13,48 @@ function UpdateTask() {
   const token = localStorage.getItem("Emp-token");
   const { id } = useParams();
 
-  // useEffect(() => {
-  //   const fetchTaskDetails = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://127.0.0.1:8000/empapi/taskchart/${id}`
-  //       );
-  //       const { name, description, performance_level } = response.data;
-  //       setName(name);
-  //       setDescription(description);
-  //       setPerformance(performance_level);
-  //     } catch (error) {
-  //       console.error("Failed to fetch task details:", error);
-  //     }
-  //   };
-
-  //   fetchTaskDetails();
-  // }, [id]);
-
   const taskUpdate = async () => {
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/empapi/taskchart/${id}/taskupdates_add/`,
-        {
-          name,
-          description,
-          performance_level,
-        },
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Updated Successfully",
-          text: "You have successfully updated the task.",
-        }).then(() => {
-          navigate("/task-chart");
-        });
+      if (name === "completed") {
+        // Call mark_complete endpoint
+        const res = await axios.post(
+          `http://127.0.0.1:8000/empapi/taskchart/${id}/mark_complete/`,
+          {},
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
       } else {
-        setErrorMessage("Update failed");
+        // Regular task update
+        await axios.post(
+          `http://127.0.0.1:8000/empapi/taskchart/${id}/taskupdates_add/`,
+          {
+            name,
+            description,
+          },
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
       }
+  
+      Swal.fire({
+        icon: "success",
+        title: "Task Updated",
+        text: "The task has been updated successfully.",
+      }).then(() => {
+        navigate("/task-chart");
+      });
+  
     } catch (error) {
       console.error("Update error:", error);
-      setErrorMessage(error.message || "Update failed");
+      setErrorMessage("Task update failed.");
     }
-  };
+  };  
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -90,6 +82,16 @@ function UpdateTask() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+          </div>
+          <div>
+            <Select
+              label="Status"
+              value={name}
+              onChange={(val) => setName(val)}
+            >
+              <Option value="In progress">In progress</Option>
+              <Option value="completed">Completed</Option>
+            </Select>
           </div>
           <div>
             <button
