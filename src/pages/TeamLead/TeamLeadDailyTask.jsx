@@ -26,10 +26,17 @@ export default function TeamLeadDailyTask() {
 
   const fetchTasks = async () => {
     const token = localStorage.getItem("TlToken");
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const teamLeadId = userData?.id;
+
     const result = await getDailyTaskTeamLeadAPI(token);
     console.log(result.data);
     if (result.status === 200) {
-      const grouped = groupTasksByEmployee(result.data);
+      const filteredTasks = result.data.filter(
+        (task) => task.teamlead?.id === teamLeadId
+      );
+  
+      const grouped = groupTasksByEmployee(filteredTasks);
       setGroupedTasks(grouped);
     }
   };
