@@ -13,6 +13,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/adminapi/token/",
@@ -46,14 +47,23 @@ const Login = () => {
           localStorage.setItem("userData", JSON.stringify(response.data));
         });
       }
+
     } catch (error) {
       console.error("Error occurred:", error);
       if (error.response) {
-        const { data } = error.response;
-        if (data?.non_field_errors?.length > 0) {
-          toast.warning(data.non_field_errors[0]);
+        if (error.response.status === 403) {
+          Swal.fire({
+            icon: "warning",
+            title: "Admin Approval Pending",
+            text: error.response.data.msg || "You are not approved by the admin yet.",
+          });
         } else {
-          toast.warning("Invalid username or password. Please try again.");
+          const { data } = error.response;
+          if (data?.non_field_errors?.length > 0) {
+            toast.warning(data.non_field_errors[0]);
+          } else {
+            toast.warning("Invalid username or password. Please try again.");
+          }
         }
       } else if (error.request) {
         alert("No response received from the server. Please try again later.");
