@@ -13,12 +13,6 @@ const TeamLeadRegister = () => {
     const [username, setUserName] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [home_address, setHomeAdress] = useState("");
-    const [job_title, setJobTitle] = useState("");
-    const [position, setPosition] = useState("");
-    const [department, setDepartment] = useState("");
-    const [prefferred_timezone, setTimeZone] = useState("");
-    const [linkedin_profile, setLinkedIn] = useState("");
-    const [skills, setSkills] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -32,13 +26,7 @@ const TeamLeadRegister = () => {
                     phoneno,
                     username,
                     password,
-                    home_address,
-                    job_title,
-                    position,
-                    department,
-                    prefferred_timezone,
-                    linkedin_profile,
-                    skills,
+                    home_address
                 }
             );
     
@@ -164,96 +152,6 @@ const TeamLeadRegister = () => {
                                 type="text"
                                 required
                                 className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-900 mt-3"
-                            >
-                                Job Title
-                            </label>
-                            <input
-                                value={job_title}
-                                onChange={(e) => setJobTitle(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium text-gray-900 mt-4"
-                            >
-                                Position
-                            </label>
-                            <input
-                                value={position}
-                                onChange={(e) => setPosition(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="text"
-                                className="block text-sm font-medium text-gray-900 mt-4"
-                            >
-                                Department
-                            </label>
-                            <input
-                                value={department}
-                                onChange={(e) => setDepartment(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="text"
-                                className="block text-sm font-medium text-gray-900 mt-4"
-                            >
-                                Time Zone
-                            </label>
-                            <input
-                                value={prefferred_timezone}
-                                onChange={(e) => setTimeZone(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="text"
-                                className="block text-sm font-medium text-gray-900 mt-4"
-                            >
-                                LinkedIn Link
-                            </label>
-                            <input
-                                value={linkedin_profile}
-                                onChange={(e) => setLinkedIn(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
-                            />
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="text"
-                                className="block text-sm font-medium text-gray-900 mt-4"
-                            >
-                                Skill
-                            </label>
-                            <input
-                                value={skills}
-                                onChange={(e) => setSkills(e.target.value)}
-                                type="text"
-                                required
-                                className="block w-full py-2 pl-3 pr-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm "
                             />
                         </div>
                         <div>

@@ -99,9 +99,6 @@ const ViewTeam = () => {
                     Team Name
                   </th>
                   <th className="py-3 px-4 border-b border-gray-300">
-                    Approve
-                  </th>
-                  <th className="py-3 px-4 border-b border-gray-300">
                     Members
                   </th>
                   <th className="py-3 px-4 border-b border-gray-300">Actions</th>
@@ -118,16 +115,7 @@ const ViewTeam = () => {
                     </td>
                     <td className="py-3 px-4 border whitespace-nowrap">
                       {team.name}
-                    </td>
-                    <td className="py-3 px-4 border whitespace-nowrap">
-                      {team.is_approved ? (
-                        <span className="text-green-500">Approved</span>
-                      ) : (
-                        <Button onClick={() => handleApprove(team.id)}>
-                          Approve
-                        </Button>
-                      )}
-                    </td>
+                    </td>            
                     <td className="py-3 px-4 border whitespace-nowrap">
                       {team.members.join(", ")}
                     </td>
